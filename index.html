@@ -55,25 +55,25 @@
         <div id="kategoriya">
           <h2
             id="buyurtmalar"
-            class="border-2 border-gray-700 rounded-lg p-2 mt-2 cursor-pointer hover:border-cyan-500 hover:text-cyan-500"
+            class="select-none border-2 border-gray-700 rounded-lg p-2 mt-2 cursor-pointer hover:border-cyan-500 hover:text-cyan-500"
           >
             <i class="fa-solid fa-check-to-slot"></i> BUYURTMALAR
           </h2>
           <h2
             id="mahsulotlar"
-            class="border-2 border-gray-700 rounded-lg p-2 mt-2 cursor-pointer hover:border-cyan-500 hover:text-cyan-500"
+            class="select-none border-2 border-gray-700 rounded-lg p-2 mt-2 cursor-pointer hover:border-cyan-500 hover:text-cyan-500"
           >
             <i class="fa-solid fa-cart-shopping"></i> MAHSULOTLAR
           </h2>
           <h2
             id="operatorlar"
-            class="border-2 border-gray-700 rounded-lg p-2 mt-2 cursor-pointer hover:border-cyan-500 hover:text-cyan-500"
+            class="select-none border-2 border-gray-700 rounded-lg p-2 mt-2 cursor-pointer hover:border-cyan-500 hover:text-cyan-500"
           >
             <i class="fa-solid fa-users"></i> OPERATORLAR
           </h2>
           <h2
             id="filiallar"
-            class="border-2 border-gray-700 rounded-lg p-2 mt-2 cursor-pointer hover:border-cyan-500 hover:text-cyan-500"
+            class="select-none border-2 border-gray-700 rounded-lg p-2 mt-2 cursor-pointer hover:border-cyan-500 hover:text-cyan-500"
           >
             <i class="fa-solid fa-location-dot"></i> FILIALLAR
           </h2>
@@ -188,45 +188,6 @@
               </button>
             </form>
           </div>
-          <div id="modal" class="modal hidden">
-            <div class="flex justify-between items-center">
-              <h5 class="font-medium text-xl">Change Products</h5>
-              <img
-                id="closeEl"
-                src="./close.svg"
-                alt=""
-                srcset=""
-                width="25"
-                height="25"
-              />
-            </div>
-            <form
-              id="edit-product"
-              class="flex flex-col bg-gray-700 p-4 w-full mt-5"
-            >
-              <input
-                id="edit-name"
-                class="border-2 text-2xl mt-5 rounded-lg"
-                type="text"
-                placeholder="Mahsulot Nomi"
-              />
-
-              <input
-                id="edit-price"
-                class="border-2 text-2xl mt-5 rounded-lg"
-                type="number"
-                placeholder="Mahsulot Narxi"
-              />
-              <button
-                id="save-new"
-                style="transition: 0.5s"
-                class="mt-5 w-full p-2 bg-white rounded text-2xl text-blue-600 border-blue-600 border-double border-8 hover:bg-blue-600 hover:text-white"
-              >
-                <i class="fa-solid fa-cloud-arrow-down"></i> Save
-              </button>
-            </form>
-          </div>
-          <div id="overlay" class="overlay hidden"></div>
         </div>
         <!-- operatorlar -->
         <div id="operatorlar_section" class="relative hidden">
@@ -268,45 +229,6 @@
               </button>
             </form>
           </div>
-          <div id="modal" class="modal hidden">
-            <div class="flex justify-between items-center">
-              <h5 class="font-medium text-xl">Change Products</h5>
-              <img
-                id="closeEl"
-                src="./close.svg"
-                alt=""
-                srcset=""
-                width="25"
-                height="25"
-              />
-            </div>
-            <form
-              id="edit-operator"
-              class="flex flex-col bg-gray-700 p-4 w-full mt-5"
-            >
-              <input
-                id="edit-name"
-                class="border-2 text-2xl mt-5 rounded-lg"
-                type="text"
-                placeholder="Mahsulot Nomi"
-              />
-
-              <input
-                id="edit-tel"
-                class="border-2 text-2xl mt-5 rounded-lg"
-                type="number"
-                placeholder="Mahsulot Narxi"
-              />
-              <button
-                id="save-operators"
-                style="transition: 0.5s"
-                class="mt-5 w-full p-2 bg-white rounded text-2xl text-blue-600 border-blue-600 border-double border-8 hover:bg-blue-600 hover:text-white"
-              >
-                <i class="fa-solid fa-cloud-arrow-down"></i> Save
-              </button>
-            </form>
-          </div>
-          <div id="overlay" class="overlay hidden"></div>
         </div>
         <!-- filiallar -->
         <div id="filiallar_section" class="relative hidden">
@@ -389,6 +311,7 @@
       </div>
     </div>
     <script src="./js/operator.js"></script>
+    <script src="./js/mahsulotlar.js"></script>
     <script src="./js/app.js"></script>
   </body>
 </html>

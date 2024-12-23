@@ -3,12 +3,8 @@ const operator = document.getElementById("operator");
 const nameInput = document.getElementById("name_operator");
 const numberInput = document.getElementById("tel_operator");
 const saveOperators = document.getElementById("save-operators");
-const addOperators = document.getElementById("add_operators");
-const editFormOperator = document.getElementById("edit-operator");
-const editName = document.getElementById("edit-name");
-const editTel = document.getElementById("edit-tel");
 let operators = JSON.parse(localStorage.getItem("operators")) || [];
-let editOperatorId;
+let editOperatorId = null;
 
 function setOperators() {
   localStorage.setItem("operators", JSON.stringify(operators));
@@ -16,6 +12,9 @@ function setOperators() {
 
 newOperator.addEventListener("click", () => {
   operator.classList.remove("hidden");
+  nameInput.value = "";
+  numberInput.value = "";
+  editOperatorId = null;
 });
 
 function getNextOperatorId() {
@@ -65,40 +64,34 @@ function showOperators() {
   });
 }
 
-function updateOperator() {
-  const nameInputValue = editNameInput.value;
-  const numberInputValue = editPriceInput.value;
+function editOperator(index) {
+  operator.classList.remove("hidden");
+  const operatorToEdit = operators[index];
 
-  operators[editOperatorId].name = nameInputValue;
-  operators[editOperatorId].num = numberInputValue;
+  editOperatorId = index;
 
-  setOperators();
+  nameInput.value = "";
+  numberInput.value = "";
 }
 
 saveOperators.addEventListener("click", (e) => {
   e.preventDefault();
   const nameInputValue = nameInput.value;
   const numberInputValue = numberInput.value;
+
   if (nameInputValue.trim() && numberInputValue.trim()) {
-    addOperatorToLocalStorage();
+    if (editOperatorId !== null) {
+      operators[editOperatorId].name = nameInputValue;
+      operators[editOperatorId].num = numberInputValue;
+    } else {
+      addOperatorToLocalStorage();
+    }
+    setOperators();
     operator.classList.add("hidden");
     showOperators();
-    nameProductInput.value = "";
-    priceProductInput.value = "";
-  } else {
-    alert("Siz hali to'ldirmadingiz");
-  }
-});
-
-editFormOperator.addEventListener("submit", (e) => {
-  e.preventDefault();
-
-  const productInput = editNameInput.value;
-  const priceInput = editPriceInput.value;
-  if (productInput.trim() && priceInput.trim()) {
-    updateOperator();
-    showOperators();
-    closeModal();
+    nameInput.value = "";
+    numberInput.value = "";
+    editOperatorId = null;
   } else {
     alert("Siz hali to'ldirmadingiz");
   }
@@ -108,12 +101,4 @@ function deleteOperator(index) {
   operators.splice(index, 1);
   setOperators();
   showOperators();
-}
-
-function editOperator(index) {
-  const operator = operators[index];
-  openModal();
-  editOperatorId = index;
-  editName.value = "";
-  editTel.value = "";
 }
