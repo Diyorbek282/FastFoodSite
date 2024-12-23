@@ -1,8 +1,9 @@
-const newOrderBtn = document.getElementById("new_order");
 const saveBtn = document.getElementById("save");
 const orderContainer = document.getElementById("order");
-const overlay = document.getElementById("overlay");
 const addOrderFunction = document.getElementById("add_order_function");
+
+const newOrderBtn = document.getElementById("new_order");
+
 const buyurtmalarBtn = document.getElementById("buyurtmalar");
 const mahsulotlarBtn = document.getElementById("mahsulotlar");
 const operatorlarBtn = document.getElementById("operatorlar");
@@ -12,32 +13,6 @@ const buyurtmalarSection = document.getElementById("buyurtmalar_section");
 const mahsulotlarSection = document.getElementById("mahsulotlar_section");
 const operatorlarSection = document.getElementById("operatorlar_section");
 const filiallarSection = document.getElementById("filiallar_section");
-
-
-let products = JSON.parse(localStorage.getItem("products")) || [];
-
-function setProducts() {
-  localStorage.setItem("products", JSON.stringify(products));
-}
-
-newProductBtn.addEventListener("click", () => {
-  productContainer.classList.remove("hidden");
-});
-
-saveProductBtn.addEventListener("click", (e) => {
-  const productInput = nameProductInput.value;
-  const priceInput = priceProductInput.value;
-  e.preventDefault();
-  if (productInput.trim() && priceInput.trim()) {
-    addProductToLocalStorage();
-    productContainer.classList.add("hidden");
-    showProducts();
-    nameProductInput.value = "";
-    priceProductInput.value = "";
-  } else {
-    alert("Siz hali to'ldirmadingiz");
-  }
-});
 
 const createNewOrder = () => {
   addOrderFunction.innerHTML += `
@@ -79,8 +54,8 @@ operatorlarBtn.addEventListener("click", () => {
 
 filiallarBtn.addEventListener("click", () => {
   addHiddenClass(filiallarSection);
+  showFillials();
 });
-
 
 const sectionsArr = [
   buyurtmalarSection,

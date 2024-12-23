@@ -1,8 +1,10 @@
 const newOperator = document.getElementById("new_operator");
 const operator = document.getElementById("operator");
-const nameInput = document.getElementById("name_operator");
-const numberInput = document.getElementById("tel_operator");
+const nameInputOperator = document.getElementById("name_operator");
+const numberInputOperator = document.getElementById("tel_operator");
 const saveOperators = document.getElementById("save-operators");
+const addOperators = document.getElementById("add_operators");
+
 let operators = JSON.parse(localStorage.getItem("operators")) || [];
 let editOperatorId = null;
 
@@ -12,8 +14,8 @@ function setOperators() {
 
 newOperator.addEventListener("click", () => {
   operator.classList.remove("hidden");
-  nameInput.value = "";
-  numberInput.value = "";
+  nameInputOperator.value = "";
+  numberInputOperator.value = "";
   editOperatorId = null;
 });
 
@@ -22,13 +24,13 @@ function getNextOperatorId() {
 }
 
 function addOperatorToLocalStorage() {
-  const nameInputValue = nameInput.value;
-  const numberInputValue = numberInput.value;
+  const nameInputOperatorValue = nameInputOperator.value;
+  const numberInputOperatorValue = numberInputOperator.value;
 
   const newOperator = {
     id: getNextOperatorId(),
-    name: nameInputValue,
-    num: numberInputValue,
+    name: nameInputOperatorValue,
+    num: numberInputOperatorValue,
   };
 
   operators.push(newOperator);
@@ -39,18 +41,18 @@ function showOperators() {
   addOperators.innerHTML = "";
 
   operators.forEach((item, i) => {
-    const productDiv = document.createElement("div");
-    productDiv.classList.add("flex", "justify-center");
-    productDiv.innerHTML = `
+    const operatorDiv = document.createElement("div");
+    operatorDiv.classList.add("flex", "justify-center");
+    operatorDiv.innerHTML = `
       <div class="flex w-5/6">
         <div class="border-2 p-4 w-full text-xl">
           <h1>ID: ${item.id}</h1>
         </div>
         <div class="border-2 p-4 w-full text-xl">
-          <h1>Operator Ismi: ${item.name}</h1>
+          <h1>Ismi: ${item.name}</h1>
         </div>
         <div class="border-2 p-4 w-full text-xl">
-          <h1>Operator Raqami: ${item.num}</h1>
+          <h1>Raqami: ${item.num}</h1>
         </div>
         <div class="border-2 p-4 w-full text-xl">
           <div class="flex">
@@ -60,7 +62,7 @@ function showOperators() {
         </div>
       </div>
     `;
-    addOperators.appendChild(productDiv);
+    addOperators.appendChild(operatorDiv);
   });
 }
 
@@ -70,27 +72,27 @@ function editOperator(index) {
 
   editOperatorId = index;
 
-  nameInput.value = "";
-  numberInput.value = "";
+  nameInputOperator.value = "";
+  numberInputOperator.value = "";
 }
 
 saveOperators.addEventListener("click", (e) => {
   e.preventDefault();
-  const nameInputValue = nameInput.value;
-  const numberInputValue = numberInput.value;
+  const nameInputOperatorValue = nameInputOperator.value;
+  const numberInputOperatorValue = numberInputOperator.value;
 
-  if (nameInputValue.trim() && numberInputValue.trim()) {
+  if (nameInputOperatorValue.trim() && numberInputOperatorValue.trim()) {
     if (editOperatorId !== null) {
-      operators[editOperatorId].name = nameInputValue;
-      operators[editOperatorId].num = numberInputValue;
+      operators[editOperatorId].name = nameInputOperatorValue;
+      operators[editOperatorId].num = numberInputOperatorValue;
     } else {
       addOperatorToLocalStorage();
     }
     setOperators();
     operator.classList.add("hidden");
     showOperators();
-    nameInput.value = "";
-    numberInput.value = "";
+    nameInputOperator.value = "";
+    numberInputOperator.value = "";
     editOperatorId = null;
   } else {
     alert("Siz hali to'ldirmadingiz");
