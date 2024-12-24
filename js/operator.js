@@ -4,6 +4,8 @@ const nameInputOperator = document.getElementById("name_operator");
 const numberInputOperator = document.getElementById("tel_operator");
 const saveOperators = document.getElementById("save-operators");
 const addOperators = document.getElementById("add_operators");
+const addAddOperator = document.getElementById("add-add-operator");
+const editEditOperator = document.getElementById("edit-edit-operator");
 
 let operators = JSON.parse(localStorage.getItem("operators")) || [];
 let editOperatorId = false;
@@ -13,6 +15,8 @@ function setOperators() {
 }
 
 newOperator.addEventListener("click", () => {
+  addAddOperator.classList.remove("hidden");
+  editEditOperator.classList.add("hidden");
   operator.classList.remove("hidden");
   nameInputOperator.value = "";
   numberInputOperator.value = "";
@@ -69,11 +73,12 @@ function showOperators() {
 function editOperator(index) {
   operator.classList.remove("hidden");
   const operatorToEdit = operators[index];
-
+  editEditOperator.classList.remove("hidden");
+  addAddOperator.classList.add("hidden");
   editOperatorId = index;
 
-  nameInputOperator.value = "";
-  numberInputOperator.value = "";
+  nameInputOperator.value = operators[editOperatorId].name;
+  numberInputOperator.value = operators[editOperatorId].num;
 }
 
 saveOperators.addEventListener("click", (e) => {

@@ -1,5 +1,10 @@
 const orderContainer = document.getElementById("order");
 
+
+
+
+
+
 const buyurtmalarBtn = document.getElementById("buyurtmalar");
 const mahsulotlarBtn = document.getElementById("mahsulotlar");
 const operatorlarBtn = document.getElementById("operatorlar");
@@ -42,3 +47,11 @@ const addHiddenClass = (section) => {
   sectionsArr.forEach((sec) => sec.classList.add("hidden"));
   section.classList.remove("hidden");
 };
+
+function closeModal(section) {
+  section.classList.add("hidden");
+}
+
+function addSome(params) {
+  params.classList.remove("hidden");
+}

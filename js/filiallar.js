@@ -4,6 +4,8 @@ const nameInputFillial = document.getElementById("name_fillial");
 const numberInputFillial = document.getElementById("num_fillial");
 const saveFillials = document.getElementById("save-fillials");
 const addFillials = document.getElementById("add_fillials");
+const addAddFillial = document.getElementById("add-add-fillial");
+const editEditFillial = document.getElementById("edit-edit-fillial");
 
 let fillials = JSON.parse(localStorage.getItem("fillials")) || [];
 let editFillialId = false;
@@ -13,6 +15,8 @@ function setFillials() {
 }
 
 newFillial.addEventListener("click", () => {
+  addAddFillial.classList.remove("hidden");
+  editEditFillial.classList.add("hidden");
   fillial.classList.remove("hidden");
   nameInputFillial.value = "";
   numberInputFillial.value = "";
@@ -69,11 +73,12 @@ function showFillials() {
 function editFillial(index) {
   fillial.classList.remove("hidden");
   const fillialToEdit = fillials[index];
-
+  addAddFillial.classList.add("hidden");
+  editEditFillial.classList.remove("hidden");
   editFillialId = index;
 
-  nameInputFillial.value = "";
-  numberInputFillial.value = "";
+  nameInputFillial.value = fillials[editFillialId].name;
+  numberInputFillial.value = fillials[editFillialId].location;
 }
 
 saveFillials.addEventListener("click", (e) => {

@@ -76,6 +76,24 @@
           >
             <div class="bg-gray-700 p-4 w-1/4">
               <form id="order_save" class="flex flex-col">
+                <div class="flex items-center justify-between">
+                  <h4
+                    id="add-add-order"
+                    class="text-white text-xl font-bold hidden"
+                  >
+                    Qo'shish
+                  </h4>
+                  <h4
+                    id="edit-edit-order"
+                    class="text-white text-xl font-bold hidden"
+                  >
+                    Tahrirlash
+                  </h4>
+                  <i
+                    onclick="closeModal(order)"
+                    class="fa-solid fa-xmark cursor-pointer transition-all duration-500 hover:scale-110 text-2xl text-white"
+                  ></i>
+                </div>
                 <input
                   id="id_order"
                   class="border-2 text-2xl rounded-lg"
@@ -146,6 +164,24 @@
             class="absolute flex justify-end right-0 top-24 left-0 hidden"
           >
             <form id="order_save" class="flex flex-col bg-gray-700 p-4 w-1/4">
+              <div class="flex items-center justify-between">
+                <h4
+                  id="add-add-product"
+                  class="text-white text-xl font-bold hidden"
+                >
+                  Qo'shish
+                </h4>
+                <h4
+                  id="edit-edit-product"
+                  class="text-white text-xl font-bold hidden"
+                >
+                  Tahrirlash
+                </h4>
+                <i
+                  onclick="closeModal(product)"
+                  class="fa-solid fa-xmark cursor-pointer transition-all duration-500 hover:scale-110 text-2xl text-white"
+                ></i>
+              </div>
               <input
                 id="name_product"
                 class="border-2 text-2xl mt-5 rounded-lg"
@@ -187,6 +223,24 @@
             class="absolute flex justify-end right-0 top-24 left-0 hidden"
           >
             <form id="operator_add" class="flex flex-col bg-gray-700 p-4 w-1/4">
+              <div class="flex items-center justify-between">
+                <h4
+                  id="add-add-operator"
+                  class="text-white text-xl font-bold hidden"
+                >
+                  Qo'shish
+                </h4>
+                <h4
+                  id="edit-edit-operator"
+                  class="text-white text-xl font-bold hidden"
+                >
+                  Tahrirlash
+                </h4>
+                <i
+                  onclick="closeModal(operator)"
+                  class="fa-solid fa-xmark cursor-pointer transition-all duration-500 hover:scale-110 text-2xl text-white"
+                ></i>
+              </div>
               <input
                 id="name_operator"
                 class="border-2 text-2xl mt-5 rounded-lg"
@@ -227,7 +281,25 @@
             id="fillial"
             class="absolute flex justify-end right-0 top-24 left-0 hidden"
           >
-            <form id="operator_add" class="flex flex-col bg-gray-700 p-4 w-1/4">
+            <form class="flex flex-col bg-gray-700 p-4 w-1/4">
+              <div class="flex items-center justify-between">
+                <h4
+                  id="add-add-fillial"
+                  class="text-white text-xl font-bold hidden"
+                >
+                  Qo'shish
+                </h4>
+                <h4
+                  id="edit-edit-fillial"
+                  class="text-white text-xl font-bold hidden"
+                >
+                  Tahrirlash
+                </h4>
+                <i
+                  onclick="closeModal(fillial)"
+                  class="fa-solid fa-xmark cursor-pointer transition-all duration-500 hover:scale-110 text-2xl text-white"
+                ></i>
+              </div>
               <input
                 id="name_fillial"
                 class="border-2 text-2xl mt-5 rounded-lg"

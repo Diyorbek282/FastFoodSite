@@ -4,6 +4,8 @@ const newOrderBtn = document.getElementById("new_order");
 const idOrder = document.getElementById("id_order"); // input
 const numberOrder = document.getElementById("number_order"); // input
 const countOrder = document.getElementById("count_order"); // input
+const addAddOrder = document.getElementById("add-add-order");
+const editEditOrder = document.getElementById("edit-edit-order");
 
 let editOrderId = false;
 
@@ -18,6 +20,8 @@ function getNextOrderId() {
 }
 
 newOrderBtn.addEventListener("click", () => {
+  addAddOrder.classList.remove("hidden");
+  editEditOrder.classList.add("hidden");
   orderContainer.classList.remove("hidden");
   editOrderId = false;
   idOrder.value = "";
@@ -130,18 +134,19 @@ function showOrders() {
 
 function editOrder(index) {
   const orderToEdit = orders[index];
-  editOrderId = index;
+  // console.log(orderToEdit.selectProductName);
+  // console.log(orderToEdit.selectProductOperator);
+  // console.log(orderToEdit.selectProductFilial);
 
+  editOrderId = index;
+  addAddOrder.classList.add("hidden");
+  editEditOrder.classList.remove("hidden");
   idOrder.value = orderToEdit.name;
   numberOrder.value = orderToEdit.number;
   countOrder.value = orderToEdit.count;
-  document.getElementById("product_order").value =
-    orderToEdit.selectProductName;
-  document.getElementById("operator_order").value =
-    orderToEdit.selectProductOperator;
-  document.getElementById("filial_order").value =
-    orderToEdit.selectProductFilial;
-
+  // (selectedProduct = orderToEdit.selectProductName),
+  //   (selectedOperator = orderToEdit.selectProductOperator),
+  //   (selectedFilial = orderToEdit.selectProductFilial),
   orderContainer.classList.remove("hidden");
 }
 

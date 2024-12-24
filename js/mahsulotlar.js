@@ -4,11 +4,15 @@ const nameInputProduct = document.getElementById("name_product");
 const priceInputProduct = document.getElementById("price_product");
 const saveProductBtn = document.getElementById("save_product");
 const addProductsContainer = document.getElementById("add_product");
+const addAddProduct = document.getElementById("add-add-product");
+const editEditProduct = document.getElementById("edit-edit-product");
 
 let products = JSON.parse(localStorage.getItem("products")) || [];
 let editProductId = false;
 
 newProductBtn.addEventListener("click", () => {
+  addAddProduct.classList.remove("hidden");
+  editEditProduct.classList.add("hidden");
   productForm.classList.remove("hidden");
   nameInputProduct.value = "";
   priceInputProduct.value = "";
@@ -83,11 +87,12 @@ function showProducts() {
 function editProduct(index) {
   productForm.classList.remove("hidden");
   const productToEdit = products[index];
-
+  addAddProduct.classList.add("hidden");
+  editEditProduct.classList.remove("hidden");
   editProductId = index;
 
-  nameInputProduct.value = "";
-  priceInputProduct.value = "";
+  nameInputProduct.value = products[editProductId].name;
+  priceInputProduct.value = products[editProductId].price;
 }
 
 function deleteProduct(index) {
