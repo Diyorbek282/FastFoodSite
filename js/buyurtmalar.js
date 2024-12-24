@@ -42,9 +42,15 @@ saveBtn.addEventListener("click", (e) => {
     selectedOperatorId &&
     selectedFilialId
   ) {
-    const selectedProduct = products.find((p) => p.id == selectedProductId);
-    const selectedOperator = operators.find((o) => o.id == selectedOperatorId);
-    const selectedFilial = fillials.find((f) => f.id == selectedFilialId);
+    const selectedProduct = products.find(
+      (product) => product.id == selectedProductId
+    );
+    const selectedOperator = operators.find(
+      (operator) => operator.id == selectedOperatorId
+    );
+    const selectedFilial = fillials.find(
+      (filial) => filial.id == selectedFilialId
+    );
 
     if (editOrderId !== false) {
       orders[editOrderId].name = idOrderInput;
