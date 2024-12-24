@@ -6,13 +6,13 @@ const saveProductBtn = document.getElementById("save_product");
 const addProductsContainer = document.getElementById("add_product");
 
 let products = JSON.parse(localStorage.getItem("products")) || [];
-let editProductId = null;
+let editProductId = false;
 
 newProductBtn.addEventListener("click", () => {
   productForm.classList.remove("hidden");
   nameInputProduct.value = "";
   priceInputProduct.value = "";
-  editProductId = null;
+  editProductId = false;
 });
 
 function setProducts() {
@@ -29,7 +29,7 @@ saveProductBtn.addEventListener("click", (e) => {
   const priceInputValue = priceInputProduct.value.trim();
 
   if (nameInputValue && priceInputValue) {
-    if (editProductId !== null) {
+    if (editProductId !== false) {
       products[editProductId].name = nameInputValue;
       products[editProductId].price = priceInputValue;
     } else {
@@ -45,7 +45,7 @@ saveProductBtn.addEventListener("click", (e) => {
     showProducts();
     nameInputProduct.value = "";
     priceInputProduct.value = "";
-    editProductId = null;
+    editProductId = false;
   } else {
     alert("Siz hali to'ldirmadingiz");
   }

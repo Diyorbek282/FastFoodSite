@@ -6,7 +6,7 @@ const saveFillials = document.getElementById("save-fillials");
 const addFillials = document.getElementById("add_fillials");
 
 let fillials = JSON.parse(localStorage.getItem("fillials")) || [];
-let editFillialId = null;
+let editFillialId = false;
 
 function setFillials() {
   localStorage.setItem("fillials", JSON.stringify(fillials));
@@ -16,7 +16,7 @@ newFillial.addEventListener("click", () => {
   fillial.classList.remove("hidden");
   nameInputFillial.value = "";
   numberInputFillial.value = "";
-  editFillialId = null;
+  editFillialId = false;
 });
 
 function getNextFillialId() {
@@ -82,7 +82,7 @@ saveFillials.addEventListener("click", (e) => {
   const numberInputFillialValue = numberInputFillial.value;
 
   if (nameInputFillialValue.trim() && numberInputFillialValue.trim()) {
-    if (editFillialId !== null) {
+    if (editFillialId !== false) {
       fillials[editFillialId].name = nameInputFillialValue;
       fillials[editFillialId].location = numberInputFillialValue;
     } else {
@@ -93,7 +93,7 @@ saveFillials.addEventListener("click", (e) => {
     showFillials();
     nameInputFillial.value = "";
     numberInputFillial.value = "";
-    editFillialId = null;
+    editFillialId = false;
   } else {
     alert("Siz hali to'ldirmadingiz");
   }

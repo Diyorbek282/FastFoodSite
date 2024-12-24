@@ -102,7 +102,7 @@
             <div class="bg-gray-700 p-4 w-1/4">
               <form id="order_save" class="flex flex-col">
                 <input
-                  id="id"
+                  id="id_order"
                   class="border-2 text-2xl rounded-lg"
                   type="text"
                   placeholder="Haridor"
@@ -111,31 +111,36 @@
                   class="border-2 text-2xl mt-5 rounded-lg"
                   type="text"
                   name=""
-                  id="number"
+                  id="number_order"
                   placeholder="Telefon Raqam"
                 />
 
-                <select class="border-2 text-2xl mt-5 rounded-lg" name="" id="">
+                <select
+                  class="border-2 text-2xl mt-5 rounded-lg"
+                  name=""
+                  id="product_order"
+                >
                   <option value="" disabled hidden selected>Menu</option>
-                  <option value="">Lavash</option>
-                  <option value="">Hot-Dog</option>
-                  <option value="">Palov</option>
                 </select>
                 <input
-                  id="orders_num"
+                  id="count_order"
                   class="border-2 text-2xl mt-5 rounded-lg"
                   type="number"
                   placeholder="Mahsulotlar Soni"
                 />
-                <select class="border-2 text-2xl mt-5 rounded-lg" name="" id="">
+                <select
+                  class="border-2 text-2xl mt-5 rounded-lg"
+                  name=""
+                  id="operator_order"
+                >
                   <option value="" disabled hidden selected>Operatorlar</option>
-                  <option value="">Diyorbek</option>
-                  <option value="">Lazizbek</option>
                 </select>
-                <select class="border-2 text-2xl mt-5 rounded-lg" name="" id="">
+                <select
+                  class="border-2 text-2xl mt-5 rounded-lg"
+                  name=""
+                  id="filial_order"
+                >
                   <option value="" disabled hidden selected>Filiallar</option>
-                  <option value="">Buxoro</option>
-                  <option value="">Toshkent</option>
                 </select>
               </form>
               <button
@@ -276,6 +281,7 @@
     <script src="./js/filiallar.js"></script>
     <script src="./js/operator.js"></script>
     <script src="./js/mahsulotlar.js"></script>
+    <script src="./js/buyurtmalar.js"></script>
     <script src="./js/app.js"></script>
   </body>
 </html>

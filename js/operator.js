@@ -6,7 +6,7 @@ const saveOperators = document.getElementById("save-operators");
 const addOperators = document.getElementById("add_operators");
 
 let operators = JSON.parse(localStorage.getItem("operators")) || [];
-let editOperatorId = null;
+let editOperatorId = false;
 
 function setOperators() {
   localStorage.setItem("operators", JSON.stringify(operators));
@@ -16,7 +16,7 @@ newOperator.addEventListener("click", () => {
   operator.classList.remove("hidden");
   nameInputOperator.value = "";
   numberInputOperator.value = "";
-  editOperatorId = null;
+  editOperatorId = false;
 });
 
 function getNextOperatorId() {
@@ -82,7 +82,7 @@ saveOperators.addEventListener("click", (e) => {
   const numberInputOperatorValue = numberInputOperator.value;
 
   if (nameInputOperatorValue.trim() && numberInputOperatorValue.trim()) {
-    if (editOperatorId !== null) {
+    if (editOperatorId !== false) {
       operators[editOperatorId].name = nameInputOperatorValue;
       operators[editOperatorId].num = numberInputOperatorValue;
     } else {
@@ -93,7 +93,7 @@ saveOperators.addEventListener("click", (e) => {
     showOperators();
     nameInputOperator.value = "";
     numberInputOperator.value = "";
-    editOperatorId = null;
+    editOperatorId = false;
   } else {
     alert("Siz hali to'ldirmadingiz");
   }
