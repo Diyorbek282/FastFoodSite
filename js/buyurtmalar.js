@@ -72,6 +72,7 @@ saveBtn.addEventListener("click", (e) => {
         selectProductFilial: selectedFilial.location,
       };
       orders.push(NewOrder);
+      ordersArray();
     }
     setOrders();
     orderContainer.classList.add("hidden");
@@ -79,6 +80,7 @@ saveBtn.addEventListener("click", (e) => {
     idOrder.value = "";
     numberOrder.value = "";
     countOrder.value = "";
+
     editOrderId = false;
   } else {
     alert("Siz hali to'ldirmadingiz");
