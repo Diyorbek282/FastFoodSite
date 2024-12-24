@@ -110,8 +110,8 @@ function showOrders() {
           </div>
           <div class="border-2 p-4 w-full text-xl">
             <div class="flex">
-                <img class="cursor-pointer transition-all duration-500 hover:scale-110" src="./edit.svg" width="25" height="25" onclick="editProduct(${i})"/>
-                <img class="cursor-pointer transition-all duration-500 hover:scale-110" src="./delete.svg" width="25" height="25" onclick="deleteProduct(${i})"/>
+                <img class="cursor-pointer transition-all duration-500 hover:scale-110" src="./edit.svg" width="25" height="25" onclick="editOrder(${i})"/>
+                <img class="cursor-pointer transition-all duration-500 hover:scale-110" src="./delete.svg" width="25" height="25" onclick="deleteOrder(${i})"/>
               </div>
           </div>
         </div>
@@ -120,7 +120,7 @@ function showOrders() {
   });
 }
 
-function editProduct(index) {
+function editOrder(index) {
   const orderToEdit = orders[index];
   editOrderId = index;
 
@@ -137,7 +137,7 @@ function editProduct(index) {
   orderContainer.classList.remove("hidden");
 }
 
-function deleteProduct(index) {
+function deleteOrder(index) {
   orders.splice(index, 1);
   setOrders();
   showOrders();
