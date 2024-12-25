@@ -51,7 +51,7 @@ function addSome(params) {
   params.classList.remove("hidden");
 }
 
-// limit for input number function  
+// limit for input number function
 const maxLength = 10;
 
 function checkInputLength(id) {

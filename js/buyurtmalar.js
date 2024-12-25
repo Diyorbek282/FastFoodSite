@@ -144,9 +144,9 @@ function editOrder(index) {
   idOrder.value = orderToEdit.name;
   numberOrder.value = orderToEdit.number;
   countOrder.value = orderToEdit.count;
-  // (selectedProduct = orderToEdit.selectProductName),
-  //   (selectedOperator = orderToEdit.selectProductOperator),
-  //   (selectedFilial = orderToEdit.selectProductFilial),
+  selectedProduct = orderToEdit.selectProductName;
+  selectedOperator = orderToEdit.selectProductOperator;
+  selectedFilial = orderToEdit.selectProductFilial;
   orderContainer.classList.remove("hidden");
 }
 
