@@ -1,10 +1,5 @@
 const orderContainer = document.getElementById("order");
 
-
-
-
-
-
 const buyurtmalarBtn = document.getElementById("buyurtmalar");
 const mahsulotlarBtn = document.getElementById("mahsulotlar");
 const operatorlarBtn = document.getElementById("operatorlar");
@@ -54,4 +49,19 @@ function closeModal(section) {
 
 function addSome(params) {
   params.classList.remove("hidden");
+}
+
+// limit for input number function  
+const maxLength = 10;
+
+function checkInputLength(id) {
+  if (id.value.length > maxLength) {
+    id.value = id.value.slice(0, maxLength);
+  }
+}
+
+function limitInputLength(id) {
+  if (id.value.length > maxLength) {
+    id.value = id.value.slice(0, maxLength);
+  }
 }

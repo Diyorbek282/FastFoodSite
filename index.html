@@ -102,10 +102,12 @@
                 />
                 <input
                   class="border-2 text-2xl mt-5 rounded-lg"
-                  type="text"
+                  type="number"
                   name=""
                   id="number_order"
                   placeholder="Telefon Raqam"
+                  onchange="checkInputLength(number_order)"
+                  oninput="limitInputLength(number_order)"
                 />
 
                 <select
@@ -253,6 +255,8 @@
                 class="border-2 text-2xl mt-5 rounded-lg"
                 type="number"
                 placeholder="Operator Raqami"
+                onchange="checkInputLength(tel_operator)"
+                oninput="limitInputLength(tel_operator)"
               />
               <button
                 id="save-operators"
