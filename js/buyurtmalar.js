@@ -60,10 +60,10 @@ saveBtn.addEventListener("click", (e) => {
       orders[editOrderId].name = idOrderInput;
       orders[editOrderId].number = numberOrderInput;
       orders[editOrderId].count = countOrderInput;
-      orders[editOrderId].selectProductName = selectedProduct.name;
-      orders[editOrderId].selectProductPrice = selectedProduct.price;
-      orders[editOrderId].selectProductOperator = selectedOperator.name;
-      orders[editOrderId].selectProductFilial = selectedFilial.location;
+      orders[editOrderId].selectProductName = selectedProduct.id;
+      orders[editOrderId].selectProductPrice = selectedProduct.id;
+      orders[editOrderId].selectProductOperator = selectedOperator.id;
+      orders[editOrderId].selectProductFilial = selectedFilial.id;
     } else {
       const NewOrder = {
         id: getNextOrderId(),
