@@ -70,10 +70,10 @@ saveBtn.addEventListener("click", (e) => {
         name: idOrderInput,
         number: numberOrderInput,
         count: countOrderInput,
-        selectProductName: selectedProduct.name,
-        selectProductPrice: selectedProduct.price,
-        selectProductOperator: selectedOperator.name,
-        selectProductFilial: selectedFilial.location,
+        selectProductName: selectedProduct.id,
+        selectProductPrice: selectedProduct.id,
+        selectProductOperator: selectedOperator.id,
+        selectProductFilial: selectedFilial.id,
       };
       orders.push(NewOrder);
       ordersArray();
@@ -105,20 +105,25 @@ function showOrders() {
             <h1><i class="fa-solid fa-phone"></i> ${order.number}</h1>
           </div>
           <div class="border-2 p-4 w-full text-xl">
-            <h1><i class="fa-solid fa-burger"></i> ${
-              order.selectProductName
-            }</h1>
-            <h1><i class="fa-solid fa-sack-dollar"></i> ${
-              order.selectProductPrice * order.count
-            }</h1>
+            <h1><i class="fa-solid fa-burger"></i> ${ArrayId(
+              order.selectProductName,
+              products
+            )}</h1>
+            <h1><i class="fa-solid fa-sack-dollar"></i> ${ArrayIdCalcl(
+              order.selectProductPrice,
+              products,
+              order.count
+            )}</h1>
           </div>
           <div class="border-2 p-4 w-full text-xl">
-            <h1><i class="fa-solid fa-headset"></i> ${
-              order.selectProductOperator
-            }</h1>
-            <h1><i class="fa-solid fa-shop"></i> ${
-              order.selectProductFilial
-            }</h1>
+            <h1><i class="fa-solid fa-headset"></i> ${ArrayIdOper(
+              order.selectProductOperator,
+              operators
+            )}</h1>
+            <h1><i class="fa-solid fa-shop"></i> ${ArrayIdFilial(
+              order.selectProductFilial,
+              fillials
+            )}</h1>
           </div>
           <div class="border-2 p-4 w-full text-xl">
             <div class="flex">
@@ -217,4 +222,40 @@ function ordersArray() {
   filialsArr();
   operatorsArr();
   productsArr();
+}
+
+function ArrayIdFilial(order, objects) {
+  for (const object of objects) {
+    if (object.id === order) {
+      return object.location;
+    }
+  }
+  return null;
+}
+
+function ArrayIdOper(order, objects) {
+  for (const object of objects) {
+    if (object.id === order) {
+      return object.name;
+    }
+  }
+  return null;
+}
+
+function ArrayId(order, objects) {
+  for (const object of objects) {
+    if (object.id === order) {
+      return object.name;
+    }
+  }
+  return null;
+}
+
+function ArrayIdCalcl(order, objects, count) {
+  for (const object of objects) {
+    if (object.id === order) {
+      return `${count}x${object.price} = ${count * object.price}`;
+    }
+  }
+  return null;
 }
