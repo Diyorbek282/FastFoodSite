@@ -9,7 +9,7 @@ const editEditOperator = document.getElementById("edit-edit-operator");
 
 let operators = JSON.parse(localStorage.getItem("operators")) || [];
 let editOperatorId = false;
-
+let extantOperator = true;
 function setOperators() {
   localStorage.setItem("operators", JSON.stringify(operators));
 }
@@ -35,6 +35,7 @@ function addOperatorToLocalStorage() {
     id: getNextOperatorId(),
     name: nameInputOperatorValue,
     num: numberInputOperatorValue,
+    extant: extantOperator,
   };
 
   operators.push(newOperator);
@@ -61,9 +62,15 @@ function showOperators() {
         <div class="border-2 p-4 w-full text-xl">
           <div class="flex">
             <img class="cursor-pointer transition-all duration-500 hover:scale-110" src="./edit.svg" width="25" height="25" onclick="editOperator(${i})"/>
-            <img class="cursor-pointer transition-all duration-500 hover:scale-110" src="./delete.svg" width="25" height="25" onclick="deleteOperator(${i})"/>
           </div>
         </div>
+        <div class="border-2 p-4 w-full text-xl">
+            <label class="switch">
+           <input onclick="switchBtnO(${item.id - 1})" 
+           type="checkbox" ${item.extant ? "checked" : ""}>
+            <span class="slider round"></span>
+            </label>
+</div>
       </div>
     `;
     addOperators.appendChild(operatorDiv);
@@ -76,7 +83,6 @@ function editOperator(index) {
   editEditOperator.classList.remove("hidden");
   addAddOperator.classList.add("hidden");
   editOperatorId = index;
-
   nameInputOperator.value = operators[editOperatorId].name;
   numberInputOperator.value = operators[editOperatorId].num;
 }
@@ -86,10 +92,11 @@ saveOperators.addEventListener("click", (e) => {
   const nameInputOperatorValue = nameInputOperator.value;
   const numberInputOperatorValue = numberInputOperator.value;
 
-  if (nameInputOperatorValue.trim() && numberInputOperatorValue.trim()) {
+  if (nameInputOperatorValue.trim() && numberInputOperatorValue.length === 9) {
     if (editOperatorId !== false) {
       operators[editOperatorId].name = nameInputOperatorValue;
       operators[editOperatorId].num = numberInputOperatorValue;
+      operators[editOperatorId].extant = extantOperator;
     } else {
       addOperatorToLocalStorage();
     }
@@ -100,12 +107,16 @@ saveOperators.addEventListener("click", (e) => {
     numberInputOperator.value = "";
     editOperatorId = false;
   } else {
-    alert("Siz hali to'ldirmadingiz");
+    alert("Siz hali to'ldirmadingiz yoki raqam kiritishda xato!!!");
   }
 });
 
-function deleteOperator(index) {
-  operators.splice(index, 1);
-  setOperators();
-  showOperators();
+function switchBtnO(i) {
+  if (operators[i].extant === true) {
+    operators[i].extant = false;
+    setOperators();
+  } else {
+    operators[i].extant = true;
+    setOperators();
+  }
 }

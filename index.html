@@ -12,7 +12,14 @@
       crossorigin="anonymous"
       referrerpolicy="no-referrer"
     />
+    <link rel="stylesheet" href="./style.css" />
   </head>
+
+  <style>
+    body {
+      user-select: none;
+    }
+  </style>
   <body>
     <div class="flex gap-2">
       <!-- rigth section -->
@@ -109,10 +116,10 @@
                   name=""
                   id="number_order"
                   placeholder="Telefon Raqam"
-                  onchange="checkInputLength(number_order)"
-                  oninput="limitInputLength(number_order)"
                 />
 
+                <!-- onchange="checkInputLength(number_order)"
+                  oninput="limitInputLength(number_order)" -->
                 <select
                   class="border-2 text-2xl mt-5 rounded-lg"
                   name=""
@@ -258,9 +265,11 @@
                 class="border-2 text-2xl mt-5 rounded-lg"
                 type="number"
                 placeholder="Operator Raqami"
-                onchange="checkInputLength(tel_operator)"
-                oninput="limitInputLength(tel_operator)"
               />
+              <!-- 
+              onchange="checkInputLength(tel_operator)"
+                oninput="limitInputLength(tel_operator)"
+              -->
               <button
                 id="save-operators"
                 style="transition: 0.5s"

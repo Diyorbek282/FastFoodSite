@@ -32,15 +32,14 @@ newOrderBtn.addEventListener("click", () => {
 saveBtn.addEventListener("click", (e) => {
   e.preventDefault();
   const idOrderInput = idOrder.value.trim();
-  const numberOrderInput = numberOrder.value.trim();
+  const numberOrderInput = numberOrder.value;
   const countOrderInput = countOrder.value.trim();
   const selectedProductId = document.getElementById("product_order").value;
   const selectedOperatorId = document.getElementById("operator_order").value;
   const selectedFilialId = document.getElementById("filial_order").value;
-
   if (
     idOrderInput &&
-    numberOrderInput &&
+    numberOrderInput.length === 9 &&
     countOrderInput &&
     selectedProductId &&
     selectedOperatorId &&
@@ -74,6 +73,8 @@ saveBtn.addEventListener("click", (e) => {
         selectProductPrice: selectedProduct.id,
         selectProductOperator: selectedOperator.id,
         selectProductFilial: selectedFilial.id,
+        currentTime: getNowTime(),
+        leftTimeCount: countdownTime(),
       };
       orders.push(NewOrder);
       ordersArray();
@@ -84,10 +85,9 @@ saveBtn.addEventListener("click", (e) => {
     idOrder.value = "";
     numberOrder.value = "";
     countOrder.value = "";
-
     editOrderId = false;
   } else {
-    alert("Siz hali to'ldirmadingiz");
+    alert("Siz hali to'ldirmadingiz yoki raqamni xato to'ldirdingiz!!!");
   }
 });
 
@@ -96,9 +96,14 @@ function showOrders() {
   orders.forEach((order, i) => {
     addOrderFunction.innerHTML += `
       <div class="flex justify-center">
-        <div class="flex w-5/6">
+        <div class="flex w-5/6"> <!--bg-red-500-->
           <div class="border-2 p-4 w-full text-xl">
             <h1>ID: ${order.id}</h1>
+            <h1><i class="fa-regular fa-clock"></i> Time:
+            ${order.currentTime}</h1>
+            <h1><i class="fa-solid fa-stopwatch"></i> Term: ${
+              order.leftTimeCount
+            }</h1>
           </div>
           <div class="border-2 p-4 w-full text-xl">
             <h1><i class="fa-solid fa-user-large"></i> ${order.name}</h1>
@@ -173,10 +178,12 @@ function productsArr() {
   disabledOption.selected = true;
   productOrder.appendChild(disabledOption);
   products.forEach((product) => {
-    const productOption = document.createElement("option");
-    productOption.value = product.id;
-    productOption.textContent = product.name;
-    productOrder.appendChild(productOption);
+    if (product.extant === true) {
+      const productOption = document.createElement("option");
+      productOption.value = product.id;
+      productOption.textContent = product.name;
+      productOrder.appendChild(productOption);
+    }
   });
 }
 
@@ -192,10 +199,12 @@ function operatorsArr() {
   disabledOption.selected = true;
   operatorOrder.appendChild(disabledOption);
   operators.forEach((operator) => {
-    const operatorOption = document.createElement("option");
-    operatorOption.value = operator.id;
-    operatorOption.textContent = operator.name;
-    operatorOrder.appendChild(operatorOption);
+    if (operator.extant === true) {
+      const operatorOption = document.createElement("option");
+      operatorOption.value = operator.id;
+      operatorOption.textContent = operator.name;
+      operatorOrder.appendChild(operatorOption);
+    }
   });
 }
 
@@ -211,10 +220,12 @@ function filialsArr() {
   disabledOption.selected = true;
   filialOrder.appendChild(disabledOption);
   fillials.forEach((filial) => {
-    const filialOption = document.createElement("option");
-    filialOption.value = filial.id;
-    filialOption.textContent = filial.location;
-    filialOrder.appendChild(filialOption);
+    if (filial.extant === true) {
+      const filialOption = document.createElement("option");
+      filialOption.value = filial.id;
+      filialOption.textContent = filial.location;
+      filialOrder.appendChild(filialOption);
+    }
   });
 }
 
@@ -259,3 +270,39 @@ function ArrayIdCalcl(order, objects, count) {
   }
   return null;
 }
+
+function getNowTime() {
+  const getTime = new Date();
+  const hours =
+    getTime.getHours() < 10 ? "0" + getTime.getHours() : getTime.getHours();
+  const minutes =
+    getTime.getMinutes() < 10
+      ? "0" + getTime.getMinutes()
+      : getTime.getMinutes();
+  const seconds =
+    getTime.getSeconds() < 10
+      ? "0" + getTime.getSeconds()
+      : getTime.getSeconds();
+
+  return `${hours}:${minutes}:${seconds}`;
+}
+
+function countdownTime() {
+  setInterval(updateCountdown, 1000);
+  const startHours = 3;
+  let leftTime = startHours * 60 * 60;
+  function updateCountdown() {
+    const hoursU = Math.floor(leftTime / 3600);
+    const minutesU = Math.floor((leftTime / 60) % 60);
+    let secondsU = leftTime % 60;
+    let hoursUP = hoursU < 10 ? "0" + hoursU : hoursU;
+    let minutesUP = minutesU < 10 ? "0" + minutesU : minutesU;
+    let secondsUP = secondsU < 10 ? "0" + secondsU : secondsU;
+    leftTime--;
+    return `${hoursUP}:${minutesUP}:${secondsUP}`;
+  }
+  setOrders();
+  return updateCountdown();
+}
+
+console.log(countdownTime());

@@ -9,6 +9,7 @@ const editEditFillial = document.getElementById("edit-edit-fillial");
 
 let fillials = JSON.parse(localStorage.getItem("fillials")) || [];
 let editFillialId = false;
+let extantFilial;
 
 function setFillials() {
   localStorage.setItem("fillials", JSON.stringify(fillials));
@@ -27,6 +28,30 @@ function getNextFillialId() {
   return fillials.length ? fillials[fillials.length - 1].id + 1 : 1;
 }
 
+saveFillials.addEventListener("click", (e) => {
+  e.preventDefault();
+  const nameInputFillialValue = nameInputFillial.value;
+  const numberInputFillialValue = numberInputFillial.value;
+
+  if (nameInputFillialValue.trim() && numberInputFillialValue.trim()) {
+    if (editFillialId !== false) {
+      fillials[editFillialId].name = nameInputFillialValue;
+      fillials[editFillialId].location = numberInputFillialValue;
+      fillials[editFillialId].extant = extantFilial;
+    } else {
+      addFillialToLocalStorage();
+    }
+    setFillials();
+    fillial.classList.add("hidden");
+    showFillials();
+    nameInputFillial.value = "";
+    numberInputFillial.value = "";
+    editFillialId = false;
+  } else {
+    alert("Siz hali to'ldirmadingiz");
+  }
+});
+
 function addFillialToLocalStorage() {
   const nameInputFillialValue = nameInputFillial.value;
   const numberInputFillialValue = numberInputFillial.value;
@@ -35,6 +60,7 @@ function addFillialToLocalStorage() {
     id: getNextFillialId(),
     name: nameInputFillialValue,
     location: numberInputFillialValue,
+    extend: extantFilial,
   };
 
   fillials.push(newFillial);
@@ -61,9 +87,15 @@ function showFillials() {
         <div class="border-2 p-4 w-full text-xl">
           <div class="flex">
             <img class="cursor-pointer transition-all duration-500 hover:scale-110" src="./edit.svg" width="25" height="25" onclick="editFillial(${i})"/>
-            <img class="cursor-pointer transition-all duration-500 hover:scale-110" src="./delete.svg" width="25" height="25" onclick="deleteFillial(${i})"/>
           </div>
         </div>
+        <div class="border-2 p-4 w-full text-xl">
+            <label class="switch">
+           <input onclick="switchBtnF(${item.id - 1})" 
+           type="checkbox" ${item.extant ? "checked" : ""}>
+            <span class="slider round"></span>
+            </label>
+</div>
       </div>
     `;
     addFillials.appendChild(fillialDiv);
@@ -81,31 +113,12 @@ function editFillial(index) {
   numberInputFillial.value = fillials[editFillialId].location;
 }
 
-saveFillials.addEventListener("click", (e) => {
-  e.preventDefault();
-  const nameInputFillialValue = nameInputFillial.value;
-  const numberInputFillialValue = numberInputFillial.value;
-
-  if (nameInputFillialValue.trim() && numberInputFillialValue.trim()) {
-    if (editFillialId !== false) {
-      fillials[editFillialId].name = nameInputFillialValue;
-      fillials[editFillialId].location = numberInputFillialValue;
-    } else {
-      addFillialToLocalStorage();
-    }
+function switchBtnF(i) {
+  if (fillials[i].extant === true) {
+    fillials[i].extant = false;
     setFillials();
-    fillial.classList.add("hidden");
-    showFillials();
-    nameInputFillial.value = "";
-    numberInputFillial.value = "";
-    editFillialId = false;
   } else {
-    alert("Siz hali to'ldirmadingiz");
+    fillials[i].extant = true;
+    setFillials();
   }
-});
-
-function deleteFillial(index) {
-  fillials.splice(index, 1);
-  setFillials();
-  showFillials();
 }

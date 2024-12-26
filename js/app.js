@@ -10,6 +10,8 @@ const mahsulotlarSection = document.getElementById("mahsulotlar_section");
 const operatorlarSection = document.getElementById("operatorlar_section");
 const filiallarSection = document.getElementById("filiallar_section");
 
+let extant = true;
+
 buyurtmalarBtn.addEventListener("click", () => {
   addHiddenClass(buyurtmalarSection);
   showOrders();
@@ -52,18 +54,45 @@ function addSome(params) {
 }
 
 // limit for input number function
-const maxLength = 10;
+const maxLength = 9;
+// const minLength = 8;
 
-function checkInputLength(id) {
-  if (id.value.length > maxLength) {
-    id.value = id.value.slice(0, maxLength);
-  }
-}
+// function checkInputLength(id) {
+//   if (id.value.length > maxLength && id.value.length < minLength) {
+//     id.value = id.value.slice(0, maxLength);
+//   } else {
+//     return;
+//   }
+// }
 
 function limitInputLength(id) {
   if (id.value.length > maxLength) {
     id.value = id.value.slice(0, maxLength);
+  } else {
+    return;
   }
 }
 
+// function deleteOperator(index) {
+//   operators.splice(index, 1);
+//   setOperators();
+//   showOperators();
+// }
 
+// function toggleSwitch() {
+//   const toggle = document.getElementById("toggle");
+//   const circle = document.getElementById("circle");
+//   const text = document.getElementById("text");
+
+//   if (toggle.checked) {
+//     extant = true;
+//     circle.classList.add("translate-x-6");
+//     circle.classList.add("bg-green-500");
+//     text.innerHTML = "On";
+//   } else {
+//     extant = false;
+//     circle.classList.remove("translate-x-6");
+//     circle.classList.remove("bg-green-500");
+//     text.innerHTML = "Off";
+//   }
+// }
