@@ -74,7 +74,6 @@ saveBtn.addEventListener("click", (e) => {
         selectProductOperator: selectedOperator.id,
         selectProductFilial: selectedFilial.id,
         currentTime: getNowTime(),
-        leftTimeCount: countdownTime(),
       };
       orders.push(NewOrder);
       ordersArray();
@@ -95,15 +94,14 @@ function showOrders() {
   addOrderFunction.innerHTML = "";
   orders.forEach((order, i) => {
     addOrderFunction.innerHTML += `
-      <div class="flex justify-center">
-        <div class="flex w-5/6"> <!--bg-red-500-->
+      <div class="flex justify-center" id="order-${i}"> <!-- Add a unique ID for each order -->
+        <div class="flex w-5/6">
           <div class="border-2 p-4 w-full text-xl">
             <h1>ID: ${order.id}</h1>
-            <h1><i class="fa-regular fa-clock"></i> Time:
-            ${order.currentTime}</h1>
-            <h1><i class="fa-solid fa-stopwatch"></i> Term: ${
-              order.leftTimeCount
+            <h1><i class="fa-regular fa-clock"></i> Time: ${
+              order.currentTime
             }</h1>
+            <h1 class="order-item">${orderDone(i)}</h1>
           </div>
           <div class="border-2 p-4 w-full text-xl">
             <h1><i class="fa-solid fa-user-large"></i> ${order.name}</h1>
@@ -132,9 +130,9 @@ function showOrders() {
           </div>
           <div class="border-2 p-4 w-full text-xl">
             <div class="flex">
-                <img class="cursor-pointer transition-all duration-500 hover:scale-110" src="./edit.svg" width="25" height="25" onclick="editOrder(${i})"/>
-                <img class="cursor-pointer transition-all duration-500 hover:scale-110" src="./delete.svg" width="25" height="25" onclick="deleteOrder(${i})"/>
-              </div>
+              <img class="cursor-pointer transition-all duration-500 hover:scale-110" src="./edit.svg" width="25" height="25" onclick="editOrder(${i})"/>
+              <img class="cursor-pointer transition-all duration-500 hover:scale-110" src="./delete.svg" width="25" height="25" onclick="deleteOrder(${i})"/>
+            </div>
           </div>
         </div>
       </div>
@@ -287,22 +285,53 @@ function getNowTime() {
   return `${hours}:${minutes}:${seconds}`;
 }
 
-function countdownTime() {
-  setInterval(updateCountdown, 1000);
-  const startHours = 3;
-  let leftTime = startHours * 60 * 60;
-  function updateCountdown() {
-    const hoursU = Math.floor(leftTime / 3600);
-    const minutesU = Math.floor((leftTime / 60) % 60);
-    let secondsU = leftTime % 60;
-    let hoursUP = hoursU < 10 ? "0" + hoursU : hoursU;
-    let minutesUP = minutesU < 10 ? "0" + minutesU : minutesU;
-    let secondsUP = secondsU < 10 ? "0" + secondsU : secondsU;
-    leftTime--;
-    return `${hoursUP}:${minutesUP}:${secondsUP}`;
-  }
-  setOrders();
-  return updateCountdown();
-}
+setInterval(() => {
+  orders.forEach((order, i) => {
+    orderDone(i);
+  });
+}, 1000);
 
-console.log(countdownTime());
+function orderDone(i) {
+  const getTime = new Date();
+  let timeZ = `<p>xatolik</p>`;
+
+  const hoursInSeconds = getTime.getHours() * 3600;
+  const minutesInSeconds = getTime.getMinutes() * 60;
+  const seconds = getTime.getSeconds();
+
+  let timeString = orders[i].currentTime;
+  let [hoursS, minutesS, secondsS] = timeString.split(":");
+  let hoursNum = Number(hoursS) * 3600 + 10800;
+  let minutesNum = Number(minutesS) * 60;
+  let secondsNum = Number(secondsS);
+
+  let term = hoursNum + minutesNum + secondsNum;
+  const currentTimeInSeconds = hoursInSeconds + minutesInSeconds + seconds;
+  const leftTime = term - currentTimeInSeconds;
+
+  if (leftTime >= 0) {
+    const hoursRemaining = Math.floor(leftTime / 3600);
+    const minutesRemaining = Math.floor((leftTime % 3600) / 60);
+    const secondsRemaining = leftTime % 60;
+    timeZ = `<i class="fa-solid fa-stopwatch"></i> Term:<p class="text-green-500">${
+      hoursRemaining < 10 ? "0" + hoursRemaining : hoursRemaining
+    }:${minutesRemaining < 10 ? "0" + minutesRemaining : minutesRemaining}:${
+      secondsRemaining < 10 ? "0" + secondsRemaining : secondsRemaining
+    }</p>`;
+  } else {
+    const ThanTime = currentTimeInSeconds - term;
+    let timeH = Math.floor(ThanTime / 3600);
+    let timeM = Math.floor((ThanTime % 3600) / 60);
+    let timeS = ThanTime % 60;
+    timeZ = `<i class="fa-solid fa-stopwatch"></i> Term:<p class="text-red-500">-${
+      timeH < 10 ? "0" + timeH : timeH
+    }:${timeM < 10 ? "0" + timeM : timeM}:${
+      timeS < 10 ? "0" + timeS : timeS
+    }</p>`;
+  }
+
+  const orderItemElement = document.querySelector(`#order-${i} .order-item`);
+  if (orderItemElement) {
+    orderItemElement.innerHTML = timeZ;
+  }
+}
