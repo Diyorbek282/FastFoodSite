@@ -6,7 +6,7 @@ const numberOrder = document.getElementById("number_order"); // input
 const countOrder = document.getElementById("count_order"); // input
 const addAddOrder = document.getElementById("add-add-order");
 const editEditOrder = document.getElementById("edit-edit-order");
-
+const NewOrderList = document.getElementById("NewOrderList");
 let editOrderId = false;
 
 let orders = JSON.parse(localStorage.getItem("orders")) || [];
@@ -19,6 +19,13 @@ function getNextOrderId() {
   return orders.length ? orders[orders.length - 1].id + 1 : 1;
 }
 
+function getPrice(name) {
+  const product = products.find((product) => product.name === name);
+  if (product) {
+    return product.price;
+  }
+}
+
 newOrderBtn.addEventListener("click", () => {
   addAddOrder.classList.remove("hidden");
   editEditOrder.classList.add("hidden");
@@ -27,6 +34,7 @@ newOrderBtn.addEventListener("click", () => {
   idOrder.value = "";
   numberOrder.value = "";
   countOrder.value = "";
+  NewOrderList.innerHTML = "";
 });
 
 saveBtn.addEventListener("click", (e) => {
@@ -37,17 +45,17 @@ saveBtn.addEventListener("click", (e) => {
   const selectedProductId = document.getElementById("product_order").value;
   const selectedOperatorId = document.getElementById("operator_order").value;
   const selectedFilialId = document.getElementById("filial_order").value;
+
   if (
+    NewOrderList.childElementCount !== 0 &&
     idOrderInput &&
     numberOrderInput.length === 9 &&
-    countOrderInput &&
-    selectedProductId &&
     selectedOperatorId &&
     selectedFilialId
   ) {
-    const selectedProduct = products.find(
-      (product) => product.id == selectedProductId
-    );
+    // const selectedProduct = products.find(
+    //   (product) => product.id == selectedProductId
+    // );
     const selectedOperator = operators.find(
       (operator) => operator.id == selectedOperatorId
     );
@@ -55,29 +63,44 @@ saveBtn.addEventListener("click", (e) => {
       (filial) => filial.id == selectedFilialId
     );
 
+    const pTag = NewOrderList.querySelectorAll("p");
+    let orderItem = [];
+
+    pTag.forEach((p) => {
+      let text = p.textContent || p.innerText;
+      if (text.includes("Mahsulot:") && text.includes("Soni:")) {
+        let productName = text.split("Mahsulot:")[1].split("Soni:")[0].trim();
+        let productCount = text.split("Soni:")[1].trim();
+        orderItem.push({
+          name: productName,
+          price: getPrice(productName),
+          counter: productCount,
+        });
+      } else {
+        alert("Buyurtma mavjud emas!!!");
+      }
+    });
+
     if (editOrderId !== false) {
       orders[editOrderId].name = idOrderInput;
       orders[editOrderId].number = numberOrderInput;
       orders[editOrderId].count = countOrderInput;
-      orders[editOrderId].selectProductName = selectedProduct.id;
-      orders[editOrderId].selectProductPrice = selectedProduct.id;
+      orders[editOrderId].selectProductName = orderItem;
       orders[editOrderId].selectProductOperator = selectedOperator.id;
       orders[editOrderId].selectProductFilial = selectedFilial.id;
     } else {
-      const NewOrder = {
+      const newOrder = {
         id: getNextOrderId(),
         name: idOrderInput,
         number: numberOrderInput,
-        count: countOrderInput,
-        selectProductName: selectedProduct.id,
-        selectProductPrice: selectedProduct.id,
+        selectProductName: orderItem,
         selectProductOperator: selectedOperator.id,
         selectProductFilial: selectedFilial.id,
         currentTime: getNowTime(),
       };
-      orders.push(NewOrder);
-      ordersArray();
+      orders.push(newOrder);
     }
+
     setOrders();
     orderContainer.classList.add("hidden");
     showOrders();
@@ -85,8 +108,10 @@ saveBtn.addEventListener("click", (e) => {
     numberOrder.value = "";
     countOrder.value = "";
     editOrderId = false;
+    NewOrderList.innerHTML = "";
+    orderItem = [];
   } else {
-    alert("Siz hali to'ldirmadingiz yoki raqamni xato to'ldirdingiz!!!");
+    alert("Siz hali to'ldirmadingiz yoki to'ldirishda xatoga yo'l qo'ydiz!!!");
   }
 });
 
@@ -94,7 +119,7 @@ function showOrders() {
   addOrderFunction.innerHTML = "";
   orders.forEach((order, i) => {
     addOrderFunction.innerHTML += `
-      <div class="flex justify-center" id="order-${i}"> <!-- Add a unique ID for each order -->
+      <div class="flex justify-center" id="order-${i}">
         <div class="flex w-5/6">
           <div class="border-2 p-4 w-full text-xl">
             <h1>ID: ${order.id}</h1>
@@ -109,13 +134,11 @@ function showOrders() {
           </div>
           <div class="border-2 p-4 w-full text-xl">
             <h1><i class="fa-solid fa-burger"></i> ${ArrayId(
-              order.selectProductName,
-              products
+              order.selectProductName
             )}</h1>
             <h1><i class="fa-solid fa-sack-dollar"></i> ${ArrayIdCalcl(
-              order.selectProductPrice,
-              products,
-              order.count
+              order.selectProductName,
+              products
             )}</h1>
           </div>
           <div class="border-2 p-4 w-full text-xl">
@@ -151,11 +174,24 @@ function editOrder(index) {
   editEditOrder.classList.remove("hidden");
   idOrder.value = orderToEdit.name;
   numberOrder.value = orderToEdit.number;
-  countOrder.value = orderToEdit.count;
-  selectedProduct = orderToEdit.selectProductName;
-  selectedOperator = orderToEdit.selectProductOperator;
-  selectedFilial = orderToEdit.selectProductFilial;
+  countOrder.value = "";
+  selectedProductId = document.getElementById("product_order").value = "Menu";
+
+  selectedOperatorId = document.getElementById("operator_order").value =
+    orderToEdit.selectProductOperator;
+  selectedFilialId = document.getElementById("filial_order").value =
+    orderToEdit.selectProductFilial;
   orderContainer.classList.remove("hidden");
+  NewOrderList.classList.remove("hidden");
+  NewOrderList.innerHTML = "";
+  orderToEdit.selectProductName.forEach((element, index) => {
+    NewOrderList.innerHTML += `
+      <div class="flex items-end" data-index="${index}">
+        <p class="text-white text-xl">Mahsulot: ${element.name} </br>Soni: ${element.counter}</p>
+        <img class="cursor-pointer transition-all duration-500 hover:scale-110" src="./delete.svg" width="25" height="25" onclick="deleteOrder1(${index})"/>
+      </div>
+    `;
+  });
 }
 
 function deleteOrder(index) {
@@ -251,22 +287,24 @@ function ArrayIdOper(order, objects) {
   return null;
 }
 
-function ArrayId(order, objects) {
-  for (const object of objects) {
-    if (object.id === order) {
-      return object.name;
-    }
-  }
-  return null;
+function ArrayId(array) {
+  return array
+    .map((element) => {
+      const totalPrice = element.price * element.counter;
+      return `<p>${element.name} ${element.counter}ta - ${element.price} = ${totalPrice}</p>`;
+    })
+    .join("");
 }
 
-function ArrayIdCalcl(order, objects, count) {
-  for (const object of objects) {
-    if (object.id === order) {
-      return `${count}x${object.price} = ${count * object.price}`;
+function ArrayIdCalcl(order, objects) {
+  let total = 0;
+  order.forEach((element) => {
+    const product = objects.find((obj) => obj.name === element.name);
+    if (product) {
+      total += product.price * element.counter;
     }
-  }
-  return null;
+  });
+  return total;
 }
 
 function getNowTime() {
@@ -334,4 +372,36 @@ function orderDone(i) {
   if (orderItemElement) {
     orderItemElement.innerHTML = timeZ;
   }
+}
+
+function NEWORDER(event) {
+  event.preventDefault();
+  const selectedProductId = document.getElementById("product_order").value;
+
+  if (
+    selectedProductId &&
+    selectedProductId !== "Menu" &&
+    countOrder.value.trim()
+  ) {
+    NewOrderList.classList.remove("hidden");
+    NewOrderList.innerHTML += `
+    <div class="flex items-end">
+      <p class="text-white text-xl">Mahsulot: ${
+        products[selectedProductId - 1].name
+      } </br>Soni: ${countOrder.value}</p>
+      <img class="cursor-pointer transition-all duration-500 hover:scale-110" src="./delete.svg" width="25" height="25" onclick="deleteOrder1(${
+        selectedProductId - 1
+      })"/>
+    </div>
+      
+      `;
+    document.getElementById("product_order").value = "Menu";
+    countOrder.value = "";
+  } else {
+    alert("Mahsulotni tanlang!");
+  }
+}
+
+function deleteOrder1(index) {
+  NewOrderList.removeChild(NewOrderList.children[index]);
 }
